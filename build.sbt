@@ -32,6 +32,9 @@ lazy val root = (project in file("."))
       "org.apache.hadoop"         % "hadoop-minicluster"             % "2.7.0" % "it"
     ),
 
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-ext-jdk15on
+    libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.58",
+
     publishTo := Some(Resolver.file("file", new File(Path.userHome.absolutePath + "/.m2/repository"))),
 
     scalacOptions ++= Seq(
