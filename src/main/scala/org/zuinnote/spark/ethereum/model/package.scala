@@ -22,8 +22,8 @@ package org.zuinnote.spark.ethereum
 
 import org.zuinnote.hadoop.ethereum.format.common
 import org.zuinnote.hadoop.ethereum.format.common.EthereumUtil
-
 import scala.collection.JavaConverters._
+import java.math.BigDecimal
 
 package object model {
   private def toHeader(header: common.EthereumBlockHeader): EthereumBlockHeader = {
@@ -37,15 +37,15 @@ package object model {
   implicit class FromJavaTransaction(val transaction: common.EthereumTransaction) extends AnyVal {
     def asScala: EthereumTransaction = {
       EthereumTransaction(
-        transaction.getNonce, transaction.getValue, transaction.getReceiveAddress, transaction.getGasPrice,
-        transaction.getGasLimit, transaction.getData, transaction.getSig_v, transaction.getSig_r, transaction.getSig_s
+        transaction.getNonce, new BigDecimal(transaction.getValue), transaction.getReceiveAddress, new BigDecimal(transaction.getGasPrice),
+        new BigDecimal(transaction.getGasLimit), transaction.getData, transaction.getSig_v, transaction.getSig_r, transaction.getSig_s
       )
     }
 
     def asScalaEnriched(chainId: Integer): EnrichedEthereumTransaction = {
       EnrichedEthereumTransaction(
-        transaction.getNonce, transaction.getValue, transaction.getReceiveAddress, transaction.getGasPrice,
-        transaction.getGasLimit, transaction.getData, transaction.getSig_v, transaction.getSig_r, transaction.getSig_s,
+        transaction.getNonce, new BigDecimal(transaction.getValue), transaction.getReceiveAddress, new BigDecimal(transaction.getGasPrice),
+        new BigDecimal(transaction.getGasLimit), transaction.getData, transaction.getSig_v, transaction.getSig_r, transaction.getSig_s,
         EthereumUtil.getSendAddress(transaction, chainId), EthereumUtil.getTransactionHash(transaction)
       )
     }
